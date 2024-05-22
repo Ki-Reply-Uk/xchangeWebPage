@@ -53,7 +53,7 @@ var Exchange = function() {
                 $('#gamerName').text($('#name').val());
                 Exchange.startTimer();
                 newGameModal.hide(false);
-                socket.send('Game Started')
+                socket.send('Game Started');
              });   
 
             // When the user clicks on x, close the modal

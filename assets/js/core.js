@@ -14,12 +14,45 @@ var Exchange = function() {
         });
     };
 
+    const socket = new WebSocket('ws://localhost:8765');
+
     return {
         bugLeft: bugLeft,
 
         gameOver: gameOver,
 
         userWon : userWon,
+
+        socket : socket,
+
+        socket.onopen = function() {
+            console.log('WebSocket connection established');
+        };
+        
+        socket.onmessage = function(event) {
+            console.log('Message from server: ', event.data);
+            if (event.data === "hard_refresh") {
+                console.log('Performing hard refresh');
+                location.reload(true); // Forces a hard refresh
+                console.log('Hard refresh complete');
+            }
+        };
+        
+        socket.onclose = function() {
+            console.log('WebSocket connection closed');
+        };
+        
+        sendStart: function() {
+            const message = 'Game Started';
+            socket.send(message);
+            console.log('Message sent: ', message);
+        }
+        
+        sendReset: function() {
+            const message = 'New Game';
+            socket.send(message);
+            console.log('Message sent: ', message);
+        }
 
         initHelper: function(helper) {
             switch (helper) {
@@ -54,8 +87,7 @@ var Exchange = function() {
                 Exchange.startTimer();
                 newGameModal.hide(false);
                 const message = 'Game Started';
-                socket.send(message);
-                console.log('Message sent: ', message);
+                Exchange.sendStart();
              });   
 
             // When the user clicks on x, close the modal
@@ -79,7 +111,7 @@ var Exchange = function() {
 
             // When the user clicks on Reset
             btnReset.on('click',function(){
-
+                Exchange.sendReset();
             });
 
             // When the user clicks on x, close the modal
@@ -209,34 +241,3 @@ var Exchange = function() {
         }
     };
 }();
-
-const socket = new WebSocket('ws://localhost:8765');
-
-socket.onopen = function() {
-    console.log('WebSocket connection established');
-};
-
-socket.onmessage = function(event) {
-    console.log('Message from server: ', event.data);
-    if (event.data === "hard_refresh") {
-        console.log('Performing hard refresh');
-        location.reload(true); // Forces a hard refresh
-        console.log('Hard refresh complete');
-    }
-};
-
-socket.onclose = function() {
-    console.log('WebSocket connection closed');
-};
-
-function sendStart() {
-    const message = 'Game Started';
-    socket.send(message);
-    console.log('Message sent: ', message);
-}
-
-function sendReset() {
-    const message = 'New Game';
-    socket.send(message);
-    console.log('Message sent: ', message);
-}

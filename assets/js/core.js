@@ -4,6 +4,8 @@ var Exchange = function() {
     let gameOver = false;
     let userWon = false;
     let pauseTimer = false;
+
+    const socket = new WebSocket('ws://localhost:8765');
     
     var uiHelperEasyPieChart = function(){
         jQuery('.js-pie-chart').easyPieChart({
@@ -20,8 +22,6 @@ var Exchange = function() {
         gameOver: gameOver,
 
         userWon : userWon,
-
-        const socket = new WebSocket('ws://localhost:8765');
 
         socket.onopen = function() {
             console.log('WebSocket connection established');

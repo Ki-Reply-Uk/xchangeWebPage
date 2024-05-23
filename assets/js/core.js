@@ -1,6 +1,6 @@
 var Exchange = function() {
 
-    let bugLeft = '10';                
+    let bugLeft = '4';                
     let gameOver = false;
     let userWon = false;
     let pauseTimer = false;
@@ -169,40 +169,77 @@ var Exchange = function() {
             //requestAnimationFrame(Exchange.updateTimer);
         },
 
-        getJsonContent:function(){
-            //const accessToken = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6ImJza0ozVUgxZ3VsNDFRdFZnSDFXbG56ZG5PWHR2LXdlVFYyRkJuNlhoVU0iLCJhbGciOiJSUzI1NiIsIng1dCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9iMDAzNjdlMi0xOTNhLTRmNDgtOTRkZS03MjQ1ZDQ1YzA5NDcvIiwiaWF0IjoxNzE2MzE0NzU3LCJuYmYiOjE3MTYzMTQ3NTcsImV4cCI6MTcxNjQwMTQ1OCwiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFWUUFxLzhXQUFBQWhDcDRYNk82Z2F6R3B5Y2MwQ0dha0p4RWZUOE5wU3BRY0JvT0Q0L05uOUcxOC82bURlNEVsUG9uazMveHVZa3kwbStuYStpTnVINk1BWldZMTlYUUQwelpZVitpT1VRQ0EvTEcvc1BwRnQwPSIsImFtciI6WyJwd2QiLCJtZmEiXSwiYXBwX2Rpc3BsYXluYW1lIjoiR3JhcGggRXhwbG9yZXIiLCJhcHBpZCI6ImRlOGJjOGI1LWQ5ZjktNDhiMS1hOGFkLWI3NDhkYTcyNTA2NCIsImFwcGlkYWNyIjoiMCIsImZhbWlseV9uYW1lIjoiU2FtcGF0aCIsImdpdmVuX25hbWUiOiJTZW50aGlsIiwiaWR0eXAiOiJ1c2VyIiwiaXBhZGRyIjoiMmEwNDo0YTQzOjk2Y2Y6ZjRhMjo2NWJhOjk4Zjg6NTQ0MjozMjg0IiwibmFtZSI6IlNlbnRoaWwgU2FtcGF0aCIsIm9pZCI6ImMzMTlmNmI4LTI1YWItNGNmMi1iYWJjLTcyYjA3MzhhZGQyYiIsIm9ucHJlbV9zaWQiOiJTLTEtNS0yMS00MTczNjUyMjktMzk5NjU5MTgwLTE3MTQ3NzUwODEtMjc5OTY3IiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAxRTEzQkZBRDkiLCJyaCI6IjAuQVFzQTRtY0RzRG9aU0UtVTNuSkYxRndKUndNQUFBQUFBQUFBd0FBQUFBQUFBQUNFQUpFLiIsInNjcCI6IkRldmljZU1hbmFnZW1lbnRBcHBzLlJlYWRXcml0ZS5BbGwgRGV2aWNlTWFuYWdlbWVudENvbmZpZ3VyYXRpb24uUmVhZFdyaXRlLkFsbCBEZXZpY2VNYW5hZ2VtZW50TWFuYWdlZERldmljZXMuUmVhZFdyaXRlLkFsbCBJZGVudGl0eVByb3ZpZGVyLlJlYWQuQWxsIElkZW50aXR5UHJvdmlkZXIuUmVhZFdyaXRlLkFsbCBJZGVudGl0eVJpc2tFdmVudC5SZWFkLkFsbCBJZGVudGl0eVJpc2tFdmVudC5SZWFkV3JpdGUuQWxsIElkZW50aXR5Umlza3lVc2VyLlJlYWQuQWxsIElkZW50aXR5Umlza3lVc2VyLlJlYWRXcml0ZS5BbGwgSWRlbnRpdHlVc2VyRmxvdy5SZWFkLkFsbCBJZGVudGl0eVVzZXJGbG93LlJlYWRXcml0ZS5BbGwgb3BlbmlkIHByb2ZpbGUgU2l0ZXMuUmVhZC5BbGwgVXNlci5NYW5hZ2VJZGVudGl0aWVzLkFsbCBVc2VyLlJlYWQgZW1haWwgRmlsZXMuUmVhZFdyaXRlIiwic3ViIjoiVFF2NlU0bjhybHVLUmdiYXZranNGYTNqNmFCNkpsdFRBX1k1QWQzYVhrUSIsInRlbmFudF9yZWdpb25fc2NvcGUiOiJFVSIsInRpZCI6ImIwMDM2N2UyLTE5M2EtNGY0OC05NGRlLTcyNDVkNDVjMDk0NyIsInVuaXF1ZV9uYW1lIjoicy5zYW1wYXRoQHJlcGx5LmNvbSIsInVwbiI6InMuc2FtcGF0aEByZXBseS5jb20iLCJ1dGkiOiI0MG80MmJEbHowZUpSaUlKX0tFakFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyJiNzlmYmY0ZC0zZWY5LTQ2ODktODE0My03NmIxOTRlODU1MDkiXSwieG1zX2NjIjpbIkNQMSJdLCJ4bXNfc3NtIjoiMSIsInhtc19zdCI6eyJzdWIiOiJnU0pieF9fUXFsUC1NOUo0LVVxMV9iU2xLel9RZkJLYVVCekxJclNpZEVBIn0sInhtc190Y2R0IjoxNDA2Mjc1ODg1LCJ4bXNfdGRiciI6IkVVIn0.AiplbLl4oV0YcZVrnICiEMhk4YHU62GxN35SSPrV8Wt07vPzKvOVUtWj04kC4HhETQnL-XtgXCUIpwgS5DGrdFUMe0j5IhSlfFEAyU0X9pAFBMI2HoG7uNXy7aqR5ppBShWywrDxP8nf02jruT8OIn4RDtbnYFar3D6nwouT1cRbx5JxqW6wzAm5xGjpVQo2w2ClyL85Df410j9oPHMybnAME_3vYnJoAXwAQA6Fe-yWdkn5RS7PcmWuJE608Dtw_txHZXwoxRMzR_zXpx9jQEU6tONeT4torU__FbkTBYzurtVUMRZgLaB2yED62X8q1stENPckAZ3Fem5u_exDfQ';
-            const accessToken = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6Ik8yMjRCMlRpeFNtNEtaYlVqNXpldHBTMkVUMUM2MzFicU1TcU1xeDI5TG8iLCJhbGciOiJSUzI1NiIsIng1dCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC9iMDAzNjdlMi0xOTNhLTRmNDgtOTRkZS03MjQ1ZDQ1YzA5NDcvIiwiaWF0IjoxNzE2MzcyMzQzLCJuYmYiOjE3MTYzNzIzNDMsImV4cCI6MTcxNjQ1OTA0MywiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFWUUFxLzhXQUFBQUtXQkdNTGUvQXZBUHl5ZXNOQUZBRGp0bFZtN0JhZFhMUnhqUEVRbkhZU0hDdlN4ZHNTWkl0OG50UEpnZlpvK1JrRXhiYXlZQUJpVkVQZ290M25LSVBEeHZuZTZieklkVDR3SUZwUmw2TlZjPSIsImFtciI6WyJwd2QiLCJyc2EiLCJtZmEiXSwiYXBwX2Rpc3BsYXluYW1lIjoiR3JhcGggRXhwbG9yZXIiLCJhcHBpZCI6ImRlOGJjOGI1LWQ5ZjktNDhiMS1hOGFkLWI3NDhkYTcyNTA2NCIsImFwcGlkYWNyIjoiMCIsImRldmljZWlkIjoiMDI1MDgxZGUtMTYyYy00M2U0LWJmMGUtYWJiNTRjZjYyYWVkIiwiZmFtaWx5X25hbWUiOiJHYW5kaGkiLCJnaXZlbl9uYW1lIjoiS2FuaXNoayIsImlkdHlwIjoidXNlciIsImlwYWRkciI6IjgyLjM2LjIyMS4xNzIiLCJuYW1lIjoiS2FuaXNoayBHYW5kaGkiLCJvaWQiOiI5MjZjNWE2Yy1lODc0LTQ1MjUtOGNmOC1lZDk2ODY3NmQ4MTkiLCJvbnByZW1fc2lkIjoiUy0xLTUtMjEtNDE3MzY1MjI5LTM5OTY1OTE4MC0xNzE0Nzc1MDgxLTMxMTkwNSIsInBsYXRmIjoiMyIsInB1aWQiOiIxMDAzMjAwMkU2MjE3NTVEIiwicmgiOiIwLkFRc0E0bWNEc0RvWlNFLVUzbkpGMUZ3SlJ3TUFBQUFBQUFBQXdBQUFBQUFBQUFDRUFOSS4iLCJzY3AiOiJEZXZpY2VNYW5hZ2VtZW50QXBwcy5SZWFkV3JpdGUuQWxsIERldmljZU1hbmFnZW1lbnRDb25maWd1cmF0aW9uLlJlYWRXcml0ZS5BbGwgRGV2aWNlTWFuYWdlbWVudE1hbmFnZWREZXZpY2VzLlJlYWRXcml0ZS5BbGwgSWRlbnRpdHlQcm92aWRlci5SZWFkLkFsbCBJZGVudGl0eVByb3ZpZGVyLlJlYWRXcml0ZS5BbGwgSWRlbnRpdHlSaXNrRXZlbnQuUmVhZC5BbGwgSWRlbnRpdHlSaXNrRXZlbnQuUmVhZFdyaXRlLkFsbCBJZGVudGl0eVJpc2t5VXNlci5SZWFkLkFsbCBJZGVudGl0eVJpc2t5VXNlci5SZWFkV3JpdGUuQWxsIElkZW50aXR5VXNlckZsb3cuUmVhZC5BbGwgSWRlbnRpdHlVc2VyRmxvdy5SZWFkV3JpdGUuQWxsIG9wZW5pZCBwcm9maWxlIFNpdGVzLlJlYWQuQWxsIFNpdGVzLlJlYWRXcml0ZS5BbGwgVXNlci5NYW5hZ2VJZGVudGl0aWVzLkFsbCBVc2VyLlJlYWQgZW1haWwiLCJzaWduaW5fc3RhdGUiOlsiZHZjX21uZ2QiLCJkdmNfZG1qZCIsImttc2kiXSwic3ViIjoiQnNkUHBjWEp3RnRGMW9vOGYzLVROc0loNlFtWWRrU0poSXA5RWcxc1c1USIsInRlbmFudF9yZWdpb25fc2NvcGUiOiJFVSIsInRpZCI6ImIwMDM2N2UyLTE5M2EtNGY0OC05NGRlLTcyNDVkNDVjMDk0NyIsInVuaXF1ZV9uYW1lIjoiay5nYW5kaGlAcmVwbHkuY29tIiwidXBuIjoiay5nYW5kaGlAcmVwbHkuY29tIiwidXRpIjoicklEQWlVdF9GVXUzZGxidWpXZ1BBQSIsInZlciI6IjEuMCIsIndpZHMiOlsiYjc5ZmJmNGQtM2VmOS00Njg5LTgxNDMtNzZiMTk0ZTg1NTA5Il0sInhtc19jYyI6WyJDUDEiXSwieG1zX3NzbSI6IjEiLCJ4bXNfc3QiOnsic3ViIjoiUkRMM0hmVEh4bU5peXVsbHE0bllKQUtjSkRRNDBBVXZqOV9jVThoVURoQSJ9LCJ4bXNfdGNkdCI6MTQwNjI3NTg4NSwieG1zX3RkYnIiOiJFVSJ9.RbGR4gmnHi5rc7NtI7JyytVuGUrsbqoDZQ-a_IfQKppXfjn3XaORmWkLceOx5h7DdH6t-R1eIuLkVQNCKT3mTcgxr8mIanHbLk72NxjU1f1jlXbNIlTF5S6VECB7EmbJJFOrdbruwE1KOl9F1KpL8-rpC86wUiU3oqx04783JOxA4Q8DoOIn0G0tClB1NNTYCzkHgPD2ZthqzleER_Ymsi4vhU2-tMPRoYNem8D6I_BGpAByxKU08wfxEUWFEzmjntoI-I4Ik-ZkD_eRgW-HKPpCaOOwRr7sUd6sjY4qkTwano21yThX1MMeuXWgCxgjPl5JCl5YH1Raiw18EGGuBQ';
-            const sharedLink = 'https://reply-my.sharepoint.com/:u:/p/s_sampath/EVAZBAkl1bdKhrR3CGokt4cBhkUewBJYzeBCGgNpRG0LCQ?email=k.gandhi%40reply.com&e=YbL4BF'
-            const link1 = 'https://6gcfbd-my.sharepoint.com/:f:/g/personal/s_hausenblas_6gcfbd_onmicrosoft_com/ElgsGWYmQFlPqutnuGOXhUMBwIg1NWlR-LpLk0qU0fD4rw?e=b6Vue8'
-            const encodedLink = btoa(sharedLink); // Base64 encode the shared link
+        readJsonFile:function(){
 
+            const accessToken = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6IlJ3NDY5VlZrM3BNbmRwMmFOM3lOaDY0OVhzQkZjUHA2aWlacXhSVWg0ZVkiLCJhbGciOiJSUzI1NiIsIng1dCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZmIwNTE1Yy0xNWU4LTQ0MTctYmNhMi04MDVhNThhOGNlOGMvIiwiaWF0IjoxNzE2Mzc0NzYzLCJuYmYiOjE3MTYzNzQ3NjMsImV4cCI6MTcxNjQ2MTQ2MywiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhXQUFBQUlua0ozYjR2NWNQd2RQNGQzN1l1Szl1aThONDZVUGFzU3RocTM5NU1WM3pYd2hsMVAxcDRvckIyaHU3b1hZc3UiLCJhbXIiOlsicHdkIl0sImFwcF9kaXNwbGF5bmFtZSI6IkdyYXBoIEV4cGxvcmVyIiwiYXBwaWQiOiJkZThiYzhiNS1kOWY5LTQ4YjEtYThhZC1iNzQ4ZGE3MjUwNjQiLCJhcHBpZGFjciI6IjAiLCJmYW1pbHlfbmFtZSI6IlZhbmNlIiwiZ2l2ZW5fbmFtZSI6IkFkZWxlIiwiaWR0eXAiOiJ1c2VyIiwiaXBhZGRyIjoiOTQuMzEuMTAzLjgwIiwibmFtZSI6IkFkZWxlIFZhbmNlIiwib2lkIjoiZmQzNzg1MTQtMGQyOC00Mjg2LTkxNmItNDJmYTdjMmQyMmJlIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAxRDM1RjA5RUIiLCJyaCI6IjAuQVVZQVhGR3dMLWdWRjBTOG9vQmFXS2pPakFNQUFBQUFBQUFBd0FBQUFBQUFBQUM4QUJFLiIsInNjcCI6Im9wZW5pZCBwcm9maWxlIFVzZXIuUmVhZCBlbWFpbCBGaWxlcy5SZWFkV3JpdGUuQWxsIiwic2lnbmluX3N0YXRlIjpbImttc2kiXSwic3ViIjoiV3VNR1pvUmhZZnBIX2dLSzZ6VTdvRDdNSmt4SFU5b1Jvcm9GU1VuODBsYyIsInRlbmFudF9yZWdpb25fc2NvcGUiOiJOQSIsInRpZCI6IjJmYjA1MTVjLTE1ZTgtNDQxNy1iY2EyLTgwNWE1OGE4Y2U4YyIsInVuaXF1ZV9uYW1lIjoiQWRlbGVWQDZnY2ZiZC5vbm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJBZGVsZVZANmdjZmJkLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6InQtaEppOEtNUTBhRWN2Y3ZwMUk1QUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfY2MiOlsiQ1AxIl0sInhtc19zc20iOiIxIiwieG1zX3N0Ijp7InN1YiI6IkR5MkdhQ3Y5VG1ZNEFzbW5taFZNUjlSTkQySk9fSjN2d0hKWmZkSElIZ2sifSwieG1zX3RjZHQiOjE2NDMwOTg3MjB9.ZGzt4LzpFDr0XIUymBl2lts-SDzqQ4-eiBDyJPu22S0SwQdEw7GyFctX-yKs6m_UNgttYPrPcAFpENFbOGtdlw6s_kTsVoVj-GkMUCSkZKtRM4axrza9nxrvdlRfdimaI62vXsavhSxY7FdX-ZF3XN53kBtvejuq4axbZUQ5gzif8jfu2mZSeZr9SvGQV6MmzjixLUrQUnMWei6MeMIXueMYPYVk4NhXLbWniKXg90rPSNLv3eiTUznMRuwZBjQFjEGQZG95Un-vOzxeEx_Hf5w_6KdR41gmiG9-621DifXjqoKFsl9IECzwP3jA7fJnAc95eYGuV4XZ9IVmJPJPrg'
+            const sharedLink = 'https://6gcfbd-my.sharepoint.com/:u:/g/personal/s_hausenblas_6gcfbd_onmicrosoft_com/Ede283773ZFAgPVzTa5ijOUB_TNQxGtCWJiXRH2xF3R9RA';
+            const encodedLink = btoa(sharedLink); 
             const fileUrl = `https://graph.microsoft.com/v1.0/shares/u!${encodedLink}/root/content`;
             
-            $.ajax({
+            return $.ajax({
                     url: fileUrl,
                     method: 'GET',
                     headers: {
-                        'content-type' : 'application/json;charset=UTF-8',
+                        'content-type' : 'application/json',
                         'Authorization': `Bearer ${accessToken}`
-                    },
-                    success: function(fileResponse) {
-                        console.log('File data:', fileResponse);
-                        const obj = fileResponse;
-                        //alert('File content successfully retrieved.');
-                        for(let i=0;i<obj.length;i++)
-                        {
-                            let item = obj[i];
-                            //alert(item.Playername);
-                        }
-                        obj.forEach(element => {
-                            alert(element.Playername);
-                        });
-                    },
-                    error: function(error) {
-                        console.error('Error fetching file:', error);
-                        alert('Error fetching file.');
                     }
                 });
+        },
+
+        updateJsonFile:function(fileContent){
+            const accessToken = 'eyJ0eXAiOiJKV1QiLCJub25jZSI6IlJ3NDY5VlZrM3BNbmRwMmFOM3lOaDY0OVhzQkZjUHA2aWlacXhSVWg0ZVkiLCJhbGciOiJSUzI1NiIsIng1dCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC8yZmIwNTE1Yy0xNWU4LTQ0MTctYmNhMi04MDVhNThhOGNlOGMvIiwiaWF0IjoxNzE2Mzc0NzYzLCJuYmYiOjE3MTYzNzQ3NjMsImV4cCI6MTcxNjQ2MTQ2MywiYWNjdCI6MCwiYWNyIjoiMSIsImFpbyI6IkFUUUF5LzhXQUFBQUlua0ozYjR2NWNQd2RQNGQzN1l1Szl1aThONDZVUGFzU3RocTM5NU1WM3pYd2hsMVAxcDRvckIyaHU3b1hZc3UiLCJhbXIiOlsicHdkIl0sImFwcF9kaXNwbGF5bmFtZSI6IkdyYXBoIEV4cGxvcmVyIiwiYXBwaWQiOiJkZThiYzhiNS1kOWY5LTQ4YjEtYThhZC1iNzQ4ZGE3MjUwNjQiLCJhcHBpZGFjciI6IjAiLCJmYW1pbHlfbmFtZSI6IlZhbmNlIiwiZ2l2ZW5fbmFtZSI6IkFkZWxlIiwiaWR0eXAiOiJ1c2VyIiwiaXBhZGRyIjoiOTQuMzEuMTAzLjgwIiwibmFtZSI6IkFkZWxlIFZhbmNlIiwib2lkIjoiZmQzNzg1MTQtMGQyOC00Mjg2LTkxNmItNDJmYTdjMmQyMmJlIiwicGxhdGYiOiIzIiwicHVpZCI6IjEwMDMyMDAxRDM1RjA5RUIiLCJyaCI6IjAuQVVZQVhGR3dMLWdWRjBTOG9vQmFXS2pPakFNQUFBQUFBQUFBd0FBQUFBQUFBQUM4QUJFLiIsInNjcCI6Im9wZW5pZCBwcm9maWxlIFVzZXIuUmVhZCBlbWFpbCBGaWxlcy5SZWFkV3JpdGUuQWxsIiwic2lnbmluX3N0YXRlIjpbImttc2kiXSwic3ViIjoiV3VNR1pvUmhZZnBIX2dLSzZ6VTdvRDdNSmt4SFU5b1Jvcm9GU1VuODBsYyIsInRlbmFudF9yZWdpb25fc2NvcGUiOiJOQSIsInRpZCI6IjJmYjA1MTVjLTE1ZTgtNDQxNy1iY2EyLTgwNWE1OGE4Y2U4YyIsInVuaXF1ZV9uYW1lIjoiQWRlbGVWQDZnY2ZiZC5vbm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJBZGVsZVZANmdjZmJkLm9ubWljcm9zb2Z0LmNvbSIsInV0aSI6InQtaEppOEtNUTBhRWN2Y3ZwMUk1QUEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfY2MiOlsiQ1AxIl0sInhtc19zc20iOiIxIiwieG1zX3N0Ijp7InN1YiI6IkR5MkdhQ3Y5VG1ZNEFzbW5taFZNUjlSTkQySk9fSjN2d0hKWmZkSElIZ2sifSwieG1zX3RjZHQiOjE2NDMwOTg3MjB9.ZGzt4LzpFDr0XIUymBl2lts-SDzqQ4-eiBDyJPu22S0SwQdEw7GyFctX-yKs6m_UNgttYPrPcAFpENFbOGtdlw6s_kTsVoVj-GkMUCSkZKtRM4axrza9nxrvdlRfdimaI62vXsavhSxY7FdX-ZF3XN53kBtvejuq4axbZUQ5gzif8jfu2mZSeZr9SvGQV6MmzjixLUrQUnMWei6MeMIXueMYPYVk4NhXLbWniKXg90rPSNLv3eiTUznMRuwZBjQFjEGQZG95Un-vOzxeEx_Hf5w_6KdR41gmiG9-621DifXjqoKFsl9IECzwP3jA7fJnAc95eYGuV4XZ9IVmJPJPrg'
+            const sharedLink = 'https://6gcfbd-my.sharepoint.com/:u:/g/personal/s_hausenblas_6gcfbd_onmicrosoft_com/Ede283773ZFAgPVzTa5ijOUB_TNQxGtCWJiXRH2xF3R9RA';
+            const encodedLink = btoa(sharedLink);
+            const updateUrl = `https://graph.microsoft.com/v1.0/shares/u!${encodedLink}/root/content`;
+
+            return $.ajax({
+                       url: updateUrl,
+                       method: 'PUT',
+                       headers: {
+                           'Authorization': `Bearer ${accessToken}`,
+                           'Content-Type': 'application/json'  
+                       },
+                       data: JSON.stringify(fileContent)
+                   });
+       },
+
+       addNewGamerDetails: async function(){
+            try {
+                const fileContent = await Exchange.readJsonFile();
+
+                let newuser = {};
+                newuser["Playername"] = $('#name').val();
+                newuser["Companyname"] = $('#company').val();
+                newuser["Time"] = "";
+                newuser["Email-Address"] = $('#email').val();
+                newuser["Finished"] = false;
+                fileContent.push(newuser);
+
+                const fileUpdateResponse = await Exchange.updateJsonFile(fileContent);
+                console.log('New Gamer details added successfully');
+            }
+            catch(error){
+                console.error("Exception:-",error);
+            }
+        },
+
+        updateGamerTime : async function(Time, Finished){
+            try{
+                const fileContent = await Exchange.readJsonFile();
+
+                fileContent.forEach(item => {
+                    if(item["Email-Address"] === $('#email').val())
+                    {
+                        item["Time"] = Time;
+                        item["Finished"] = Finished;
+                    }
+                });
+                const fileUpdateResponse = await Exchange.updateJsonFile(fileContent);
+                console.log('Gamer details updated successfully');
+            }
+            catch(error){
+                console.error('Exception while updating',error);
+            }
         }
     };
 }();

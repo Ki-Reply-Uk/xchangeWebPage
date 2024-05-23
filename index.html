@@ -298,11 +298,13 @@
                 if(localStorage.getItem('targetTime') !== null && Exchange.userWon)
                 {
                     Exchange.pauseCounter();
+                    Exchange.updateGamerTime($('#countup').text(),true);
                     Exchange.gameWonModal();
                 }
 
                 if(Exchange.gameOver)
                 {
+                    Exchange.updateGamerTime("",false);
                     Exchange.gameOverPopUp();
                     localStorage.clear();
                 }              

@@ -1,6 +1,6 @@
 var Exchange = function() {
 
-    let bugLeft = '4';                
+    let bugLeft = '3';                
     let gameOver = false;
     let userWon = false;
     let pauseTimer = false;
@@ -53,6 +53,7 @@ var Exchange = function() {
                 $('#gamerName').text($('#name').val());
                 Exchange.startTimer();
                 newGameModal.hide(false);
+                sendStart()
              });   
 
             // When the user clicks on x, close the modal
@@ -76,7 +77,7 @@ var Exchange = function() {
 
             // When the user clicks on Reset
             btnReset.on('click',function(){
-
+                sendReset()
             });
 
             // When the user clicks on x, close the modal
@@ -102,7 +103,7 @@ var Exchange = function() {
 
             // When the user clicks on New Game
             btnNewGame.on('click', function(){
-
+                sendReset()
             });
 
             // When the user clicks on x, close the modal
@@ -120,7 +121,7 @@ var Exchange = function() {
 
         startTimer:function(){
             
-            const targetTime = new Date().getTime() + 1 * 60 * 1000; // Set the target time for the countdown
+            const targetTime = new Date().getTime() + 1 * 30 * 1000; // Set the target time for the countdown
             localStorage.setItem('targetTime', targetTime); // Store the target time in local storage
 
             // Update the timer display
@@ -243,3 +244,34 @@ var Exchange = function() {
         }
     };
 }();
+
+const socket = new WebSocket('ws://localhost:8765');
+
+socket.onopen = function() {
+    console.log('WebSocket connection established');
+};
+
+socket.onmessage = function(event) {
+    console.log('Message from server: ', event.data);
+    if (event.data === "hard_refresh") {
+        console.log('Performing hard refresh');
+        location.reload(true); // Forces a hard refresh
+        console.log('Hard refresh complete');
+    }
+};
+
+socket.onclose = function() {
+    console.log('WebSocket connection closed');
+};
+
+function sendStart() {
+    const message = 'Game Started';
+    socket.send(message);
+    console.log('Message sent: ', message);
+}
+
+function sendReset() {
+    const message = 'New Game';
+    socket.send(message);
+    console.log('Message sent: ', message);
+}

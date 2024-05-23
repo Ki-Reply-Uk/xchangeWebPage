@@ -255,7 +255,8 @@ socket.onmessage = function(event) {
     console.log('Message from server: ', event.data);
     if (event.data === "hard_refresh") {
         console.log('Performing hard refresh');
-        location.reload(true); // Forces a hard refresh
+        // Call the function to trigger a hard reload
+        hardReload();
         console.log('Hard refresh complete');
     }
 };
@@ -274,4 +275,14 @@ function sendReset() {
     const message = 'New Game';
     socket.send(message);
     console.log('Message sent: ', message);
+}
+
+function hardReload() {
+    var url = window.location.href;
+    if (url.indexOf('?') > -1) {
+        url += '&_=' + new Date().getTime();
+    } else {
+        url += '?_=' + new Date().getTime();
+    }
+    window.location.href = url;
 }

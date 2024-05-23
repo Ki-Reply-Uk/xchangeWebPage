@@ -1,6 +1,6 @@
 var Exchange = function() {
 
-    let bugLeft = '1';                
+    let bugLeft = '100';                
     let gameOver = false;
     let userWon = false;
     let pauseTimer = false;

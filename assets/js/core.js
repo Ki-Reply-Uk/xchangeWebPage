@@ -40,12 +40,29 @@ var Exchange = function() {
             }
         },
 
+        checkNewGameForm: function () {
+            const name = $('#name').val().trim();
+            const company = $('#company').val().trim();
+            const email = $('#email').val().trim();
+            const btnStartGame = $('#btnStartGame');
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (name && company && email && emailPattern.test(email)) {
+                btnStartGame.prop('disabled', false);
+            } else {
+                btnStartGame.prop('disabled', true);
+            }
+        },
+
         newGamePopup: function(){
              
              var newGameModal = $('#newGameModal'); // Get the modal
              var span = $('.close'); // Get the <span> element that closes the modal
              var btnStartGame = $('#btnStartGame');
+             
+             
              newGameModal.show();
+             $('#name, #company, #email').on('input', this.checkNewGameForm);
 
              // When the user clicks on Start Game
              btnStartGame.on('click',function()

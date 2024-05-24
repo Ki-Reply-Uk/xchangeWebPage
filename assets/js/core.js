@@ -2,7 +2,7 @@ var Exchange = function() {
 
     let bugLeft = '4';                
     let gameOver = false;
-    let userWon = true;
+    let userWon = false;
     let pauseTimer = false;
     
     var uiHelperEasyPieChart = function(){

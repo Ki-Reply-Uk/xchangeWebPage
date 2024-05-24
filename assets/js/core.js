@@ -121,6 +121,7 @@ var Exchange = function() {
             // When the user clicks on New Game
             btnNewGame.on('click', function(){
                 sendReset()
+                localStorage.clear()
             });
 
             // When the user clicks on x, close the modal

@@ -2,7 +2,7 @@ var Exchange = function() {
 
     let bugLeft = '4';                
     let gameOver = false;
-    let userWon = false;
+    let userWon = true;
     let pauseTimer = false;
     
     var uiHelperEasyPieChart = function(){
@@ -117,6 +117,7 @@ var Exchange = function() {
             var btnNewGame = $('#btnNewGame');
 
             successModal.show();
+            $('#gameWonMessage').text("Game won - time taken: " + ('#countup').text()); 
 
             // When the user clicks on New Game
             btnNewGame.on('click', function(){

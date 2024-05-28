@@ -72,18 +72,6 @@ var Exchange = function() {
                 newGameModal.hide(false);
                 sendStart()
              });   
-
-            // When the user clicks on x, close the modal
-             span.on('click', function() {
-                newGameModal.hide();
-             });
-
-             // When the user clicks anywhere outside of the modal, close it
-             $(window).on('click', function(event) {
-                 if ($(event.target).is(newGameModal)) {
-                    newGameModal.hide();
-                 }
-             });
         },
     
         gameOverPopUp: function(){
@@ -95,18 +83,6 @@ var Exchange = function() {
             // When the user clicks on Reset
             btnReset.on('click',function(){
                 sendReset()
-            });
-
-            // When the user clicks on x, close the modal
-            span.on('click', function() {
-                gameOverModal.hide();
-            });
-
-            // When the user clicks anywhere outside of the modal, close it
-            $(window).on('click', function(event) {
-                if ($(event.target).is(gameOverModal)) {
-                    gameOverModal.hide();
-                }
             });
         },
 
@@ -123,18 +99,6 @@ var Exchange = function() {
             btnNewGame.on('click', function(){
                 sendReset()
                 localStorage.clear()
-            });
-
-            // When the user clicks on x, close the modal
-            span.on('click', function() {
-                successModal.hide();
-            });
-
-            // When the user clicks anywhere outside of the modal, close it
-            $(window).on('click', function(event) {
-                if ($(event.target).is(successModal)) {
-                    successModal.hide();
-                }
             });
         },
 
